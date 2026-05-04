@@ -13,6 +13,10 @@ Deliver an integrated decision-support + data Science/Data Analytics prototype f
 - Deliver a map-centric, responsive dashboard with stakeholder-driven views (Risk/Readiness, Response/Routes, Data Quality)
 - Produce runbooks, architecture diagrams, and a reusable repository for handoff
 
+**Closeout / Handoff Note**
+- The Spring 2026 course closed with the notebook-first pipeline, GitHub Pages dashboard, and local DuckDB + Streamlit baseline as the recorded handoff state.
+- A deferred technical extraction note for the unmerged PR14 follow-on path is preserved at `docs/planning/pr14_technical_extraction_handoff.md`.
+
 **Scope**
 - Data-as-a-Service layer with documented sources, refresh, and catalog
 - Decision-support analytics (risk/readiness prioritization overlays)
@@ -57,6 +61,7 @@ Deliver an integrated decision-support + data Science/Data Analytics prototype f
 │   └── local/duckdb/                   # Local DuckDB workbench artifacts
 ├── docs/
 │   ├── meetings/                       # Approved publishable meeting records
+│   ├── presentations/                  # Class decks and presentation artifacts
 │   ├── planning/                       # Scope, requirements, and planning docs
 │   ├── research/                       # Research stacks and question banks
 │   └── specs/                          # Index specs and implementation playbooks
@@ -67,6 +72,7 @@ Deliver an integrated decision-support + data Science/Data Analytics prototype f
 ├── noaa_pr_waterlevel_comprehensive.html  # Published dashboard artifact
 ├── index.html                          # GitHub Pages landing redirect
 ├── outputs/                            # Local/generated exports and artifacts
+├── requirements.txt                    # Local Python dependency baseline
 ├── run.sh                              # Local DuckDB + Streamlit prototype runner
 ├── scripts/                            # Reusable local pipeline/support scripts
 ├── sql/                                # Sample DuckDB baseline queries
@@ -75,6 +81,7 @@ Deliver an integrated decision-support + data Science/Data Analytics prototype f
 │   ├── IMINT/
 │   ├── MASINT/
 │   └── OSINT/
+├── tests/                              # Smoke tests and validation support
 └── README.md
 ```
 
@@ -111,7 +118,7 @@ For a docs-only breakdown, see `docs/README.md`.
 
 ### Current State
 
-This repository is currently not centered on a formal DuckDB database layer or a deployed Streamlit application. The current MVP remains notebook-first, local-first by default, driven by curated public-data ingest and staged analytics notebooks, and publicly surfaced through the existing GitHub Pages dashboard flow.
+This repository is not centered on a production database layer or a deployed Streamlit application. The recorded handoff state remains notebook-first and local-first by default, driven by curated public-data ingest and staged analytics notebooks, publicly surfaced through the existing GitHub Pages dashboard flow, and supported locally by the DuckDB + Streamlit workbench baseline.
 
 For the local workbench, the recommended path after cloning is:
 
