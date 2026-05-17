@@ -1,125 +1,167 @@
-\# Dashboard Data Dictionary
+# Dashboard Data Dictionary
 
-\*\*Project:\*\* GMU Flood Early Warning Decision-Support Platform — Puerto Rico    
-\*\*Source:\*\* Index Spec v1 (February 26, 2026\)    
-\*\*Purpose:\*\* Defines all key fields shown in the dashboard or used in PR \#14,  
-for reviewers who are not familiar with the underlying scoring pipeline.
+**Project:** GMU Flood Early Warning Decision-Support Platform — Puerto Rico  
+**Reference basis:** Index Spec v1 plus the recorded notebook/workbench handoff implementation in this repository  
+**Purpose:** Define the main scored fields shown in the local workbench and related dashboard discussion materials without forcing reviewers to reconstruct the scoring flow from notebook code alone.
 
-\---
+---
 
-\#\# Score Range
+## Score Range
 
-All index scores are normalized to a \*\*0–100 scale\*\*:  
-\- Higher \= worse (more risk, more vulnerable, less ready)  
-\- Exception: Resilience and Readiness scores — higher \= better capacity
+Current scored fields are normalized to a **0-100 scale** unless noted otherwise.
 
-\---
+- Higher is worse for hazard, exposure, vulnerability, and priority-style fields.
+- Higher is better for resilience, readiness, and recovery-capacity fields.
+- `confidence_0_1` is the exception: it is stored on a **0-1 scale** as the normalized confidence value derived from `confidence_score`.
 
-\#\# Priority Band
+---
 
-The dashboard assigns each municipio a color band based on its composite score.
+## Priority Band
 
-| Band   | Score Range | Meaning |  
-|--------|-------------|---------|  
-| Green  | 0–50        | Low concern |  
-| Yellow | 50–70       | Elevated — monitor closely |  
-| Orange | 70–85       | High — consider pre-positioning resources |  
-| Red    | 85–100      | Critical — immediate action warranted |
+The current scored outputs classify each municipio into a color band using the **confidence-adjusted priority score**.
 
-\*\*Hard overrides:\*\*  
-\- Active NWS Flash Flood Warning → municipio forced to \*\*Red\*\* regardless of score  
-\- NOAA/USGS exceeding major flood threshold → at least \*\*Orange/Red\*\*
+| Band | Score Range | Meaning |
+|---|---:|---|
+| Green | 0-49.99 | Low concern |
+| Yellow | 50-69.99 | Elevated; monitor closely |
+| Orange | 70-84.99 | High; consider pre-positioning resources |
+| Red | 85-100 | Critical; immediate action warranted |
 
-\---
+**Current implementation note:**
+- bands are assigned from `priority_index_conf_adj`
+- hard red override is applied when `nws_global_alert_score >= 95` or `flood_hazard_muni >= 90`
 
-\#\# Hazard Score (H)
+---
 
-\*\*What it measures:\*\* How intense or likely the flood hazard is right now at  
-nearby monitoring stations.
+## Hazard Fields
 
-\*\*Data sources:\*\* NOAA CO-OPS (water levels), USGS NWIS (stream discharge/gage  
-height), NWS alerts (watches and warnings)
+**`hazard_combined`**  
+What it measures: overall hazard level after combining hazard inputs into a normalized municipio-level score.
 
-\---
+**`flood_hazard_muni`**  
+What it measures: municipio-level flood hazard derived from flood-related inputs.
 
-\#\# Vulnerability Score (V)
+**`earthquake_hazard_score`**  
+What it measures: municipio-level earthquake hazard contribution used in the broader hazard picture.
 
-\*\*What it measures:\*\* How susceptible the population is to harm from a flood event.
+**Main data sources:** NOAA CO-OPS, USGS NWIS, NWS alerts, and the earthquake ingest path used by the staged notebook pipeline.
 
-\*\*Formula weights:\*\*  
-\- SVI (CDC/ATSDR Social Vulnerability Index): primary input  
-\- No-vehicle households: elevated weight (confirmed priority by client, Mar 19 MOM)  
-\- Housing fragility: structural vulnerability indicators
+---
 
-\---
+## Exposure Score
 
-\#\# No-Vehicle Households
+**`exposure_score`**  
+What it measures: the concentration of people or assets exposed to the hazard footprint.
 
-\*\*What it means:\*\* Percentage of households in a municipio with no access to a  
-private vehicle, sourced from US Census / ACS data.
+In the conceptual risk equation, exposure is the **E** term.
 
-\*\*Why it matters:\*\* During evacuation, households without vehicles depend on  
-public transport or external assistance. This directly compounds flood  
-evacuation difficulty and is weighted separately in the vulnerability score.
+---
 
-\---
+## Vulnerability Score
 
-\#\# Poverty Rate
+**`vulnerability_score`**  
+What it measures: how susceptible the population is to harm from a flood or related disruptive event.
 
-\*\*What it measures:\*\* Percentage of the population below the federal poverty line.
+The repository’s written design and staged feature engineering emphasize:
+- social vulnerability inputs
+- transport/access constraints such as no-vehicle households
+- housing fragility proxies
+- poverty and income-related stressors
 
-\*\*How it differs from income:\*\* Poverty rate captures the share of people in  
-hardship; median household income captures the central tendency of earnings.  
-Both are included because they reflect different dimensions of economic  
-vulnerability.
+This field is the **V** term in the conceptual risk equation.
 
-\---
+---
 
-\#\# Readiness Score
+## No-Vehicle Households
 
-\*\*What it measures:\*\* Institutional and infrastructure capacity to respond to  
-a flood event.
+**What it means:** Percentage of households in a municipio without access to a private vehicle, typically sourced from Census / ACS-derived inputs.
 
-\*\*Key indicators include:\*\* Hospital proximity, road network integrity,  
-emergency management capacity, and utility coverage.
+**Why it matters:** Households without vehicles face greater evacuation and access constraints during flood events, which is why this factor matters operationally in vulnerability review.
 
-\---
+---
 
-\#\# Risk Index (R)
+## Poverty and Income Context
 
-\*\*Formula:\*\* \`R \= H × E × V\`
+**Poverty-related indicators** capture the share of the population experiencing direct economic hardship.  
+**Income-related indicators** capture broader earning capacity.
 
-Where:  
-\- H \= Hazard score  
-\- E \= Exposure (population/assets in the flood zone)  
-\- V \= Vulnerability score
+Both matter because they describe different dimensions of vulnerability rather than duplicating the same idea.
 
-This is the primary field used to rank and color-code municipios on the  
-dashboard map.
+---
 
-\---
+## Resilience, Readiness, and Recovery Fields
 
-\#\# Confidence Score
+**`resilience_index`**  
+What it measures: retained capacity or system strength relative to fragility-style inputs.
 
-\*\*What it measures:\*\* How reliable the current index score is, based on  
-data quality of the underlying feeds.
+**`response_readiness_index`**  
+What it measures: how ready the municipio is to respond effectively right now.
 
-\*\*Formula:\*\* \`Conf \= 0.35×Freshness \+ 0.25×Completeness \+ 0.25×Validity \+ 0.15×Cross-check\`
+**`recovery_capacity_index`**  
+What it measures: how well the municipio can recover or restore function after disruption.
 
-Range: 0–1
+These fields are part of the operational scoring path and help shape priority, but they are not all “risk” in the narrow hazard-times-exposure-times-vulnerability sense.
 
-\*\*Used in dashboard:\*\* Low confidence scores trigger a hatch/opacity overlay  
-on the map so users know to interpret that municipio's score with caution.
+---
 
-\---
+## Risk Index vs Priority Index
 
-\#\# Data Sources Summary
+**`risk_index_raw`**  
+Formula:
 
-| Field | Source |  
-|-------|--------|  
-| Water level / flood thresholds | NOAA CO-OPS API |  
-| Stream discharge / gage height | USGS NWIS |  
-| Flood alerts | NWS CAP/alerts API |  
-| Population, housing, income, vehicles | US Census / ACS |  
-| Social Vulnerability Index | CDC/ATSDR SVI |  
-| Infrastructure layers | Curated GIS (hospitals, roads, substations) |  
+`risk_index_raw = (hazard_combined / 100) * (exposure_score / 100) * (vulnerability_score / 100) * 100`
+
+This is the repository’s implemented multiplicative **risk concept**, corresponding to the familiar `H × E × V` framing from Index Spec v1.
+
+**Important distinction:** the current ranked operational output is **not** driven by `risk_index_raw` alone.
+
+**`priority_index`**  
+What it measures: phase-aware operational priority that combines:
+- raw risk
+- lower response readiness
+- lower recovery capacity
+
+The weights vary by phase (`PRE`, `DURING`, `POST`) in the scoring notebook.
+
+**`priority_index_conf_adj`**  
+What it measures: the confidence-adjusted version of `priority_index`.
+
+This is the field currently used for:
+- ranking municipios in the scored outputs
+- assigning `priority_band`
+- driving the main workbench table/chart ordering
+
+---
+
+## Confidence Fields
+
+**`confidence_score`**  
+What it measures: overall confidence in the scored output, based on data freshness, completeness, validity, and cross-check logic.
+
+Stored range: **0-100**
+
+**`confidence_0_1`**  
+What it measures: normalized confidence derived from `confidence_score / 100`
+
+Stored range: **0-1**
+
+**Operational use:** confidence is used to adjust `priority_index` into `priority_index_conf_adj`, reducing overconfidence when input quality is weaker.
+
+---
+
+## Data Sources Summary
+
+| Field family | Typical source |
+|---|---|
+| Water level / flood thresholds | NOAA CO-OPS API |
+| Stream discharge / gage height | USGS NWIS |
+| Flood alerts | NWS CAP / alerts API |
+| Population, housing, income, vehicles | US Census / ACS |
+| Social vulnerability context | CDC/ATSDR SVI and related census-derived features |
+| Infrastructure / facilities context | Curated GIS layers and derived features |
+
+---
+
+## Reviewer Note
+
+This dictionary is meant to support handoff and review of the repository’s recorded scoring/workbench state. Where the conceptual index specification and the implemented operational scoring path differ, this note prioritizes the **implemented handoff state** so future contributors are not misled about what the repository currently does.

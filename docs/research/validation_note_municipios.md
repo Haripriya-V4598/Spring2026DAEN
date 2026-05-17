@@ -1,122 +1,87 @@
-\# Validation Note — Selected Municipios
+# Validation Note — Selected Municipios
 
-\*\*Project:\*\* GMU Flood Early Warning Decision-Support Platform — Puerto Rico    
-\*\*Municipios reviewed:\*\* Salinas, Mayagüez, San Juan    
-\*\*Purpose:\*\* Cross-check whether dashboard risk outputs are directionally  
-believable against publicly available historical and contextual sources.    
-\*\*Method:\*\* Open-source research using FEMA, NOAA, news reporting,  
-and academic/government flood records for Puerto Rico.
+**Project:** GMU Flood Early Warning Decision-Support Platform — Puerto Rico  
+**Municipios reviewed:** Salinas, Mayagüez, San Juan  
+**Purpose:** Cross-check whether the dashboard/workbench risk outputs are directionally believable against publicly available historical and contextual sources.  
+**Method:** Open-source review using FEMA, NOAA, NWS, USGS, and public reporting relevant to flood exposure and vulnerability in Puerto Rico.
 
-\---
+---
 
-\#\# What "directionally believable" means
+## What "directionally believable" means
 
-This note does not claim the dashboard scores are precise or perfectly  
-calibrated. The goal is to check whether the relative risk rankings make  
-sense — does a municipio the dashboard flags as high-risk actually have a  
-documented history of flood vulnerability? If yes, the model is pointing  
-in the right direction.
+This note does **not** claim the dashboard scores are precise or fully validated against historical labels. The narrower goal is to test whether the relative output patterns make sense:
 
-\---
+- if the model flags a municipio as high concern, is there public evidence that supports that concern?
+- if the model shows a readiness offset, is that consistent with what is known publicly about capacity and infrastructure?
 
-\#\# Salinas
+If yes, the model is at least pointing in a defensible direction.
 
-\*\*Why this municipio matters:\*\*    
-Salinas is located on Puerto Rico's south coast, a region historically  
-associated with flooding from both storm surge and river overflow. Selected  
-as a pilot municipio in the March 26, 2026 client meeting.
+---
 
-\*\*What public sources say:\*\*  
-\- Salinas falls within FEMA-designated Special Flood Hazard Areas (SFHAs)  
-  along the southern coastal plain.  
-\- The south coast experienced significant flooding during Hurricane Maria  
-  (2017), with extended outages and inundation of low-lying areas.  
-\- The municipio has a high proportion of agricultural land and low-elevation  
-  terrain, increasing surface water accumulation during heavy rainfall.  
-\- CDC/ATSDR SVI data indicates elevated socioeconomic vulnerability relative  
-  to the island average — lower income, higher poverty rates.  
-\- No-vehicle household rates in Salinas are above the Puerto Rico median,  
-  compounding evacuation difficulty.
+## Salinas
 
-\*\*Assessment:\*\* Dashboard flagging Salinas as high risk is consistent with  
-public evidence. The geography, social vulnerability, and historical exposure  
-all align.
+**Why this municipio matters:**  
+Salinas is on Puerto Rico's south coast, with exposure to coastal flooding, low-lying terrain, and socially vulnerable populations. It was also called out as a pilot municipio in class/client discussion.
 
-\---
+**What public sources suggest:**
+- FEMA maps place parts of the municipio in Special Flood Hazard Areas along the southern coastal plain.
+- South-coast communities experienced significant flooding and long-duration disruption during Hurricane Maria (2017).
+- Low elevation and surface-water accumulation risk make heavy-rain flood impacts plausible.
+- Public vulnerability indicators for the area support concern around poverty, access constraints, and evacuation difficulty.
 
-\#\# Mayagüez
+**Assessment:**  
+Flagging Salinas as high concern is directionally consistent with known geography, historical flood exposure, and social vulnerability context.
 
-\*\*Why this municipio matters:\*\*    
-Mayagüez is Puerto Rico's third-largest city, located on the west coast at  
-the mouth of the Río Yagüez. Selected as a pilot municipio for its dual  
-exposure to coastal and riverine flood hazards.
+---
 
-\*\*What public sources say:\*\*  
-\- The Río Yagüez has a documented history of flooding through the urban core  
-  of Mayagüez during heavy rainfall events.  
-\- Mayagüez was significantly impacted by the January 2020 earthquake sequence,  
-  which damaged infrastructure and displaced residents — a compounding hazard  
-  factor the model accounts for via USGS earthquake data.  
-\- FEMA flood maps show portions of the city within AE (100-year flood) zones.  
-\- SVI indicators for Mayagüez are moderate relative to the island — not the  
-  most vulnerable, but not well-resourced either.
+## Mayagüez
 
-\*\*Assessment:\*\* Dashboard scoring Mayagüez at moderate-to-high risk is  
-consistent with its riverine exposure, earthquake history, and partial FEMA  
-flood zone coverage.
+**Why this municipio matters:**  
+Mayagüez combines urban, riverine, and coastal exposure on the west side of Puerto Rico and was treated as a meaningful pilot municipio for hazard review.
 
-\---
+**What public sources suggest:**
+- The Río Yagüez corridor has a documented flood history affecting the urban core.
+- FEMA flood mapping places portions of the municipio in higher-risk flood zones.
+- The broader west-side hazard picture includes compounding stress from the 2020 earthquake sequence, which matters for infrastructure and recovery considerations even when the immediate focus is flooding.
+- Public vulnerability indicators do not place Mayagüez among the least-constrained municipios, which supports a moderate-to-high concern posture rather than a low-risk one.
 
-\#\# San Juan
+**Assessment:**  
+Scoring Mayagüez as moderate-to-high concern is directionally believable given its river exposure, flood-zone presence, and multi-hazard context.
 
-\*\*Why this municipio matters:\*\*    
-San Juan is Puerto Rico's capital and most populous municipio. It was selected  
-to test whether the model correctly reflects a high-exposure but also  
-higher-readiness urban center.
+---
 
-\*\*What public sources say:\*\*  
-\- San Juan experiences chronic urban flooding — particularly in low-lying  
-  neighborhoods like Puerta de Tierra and Santurce — during heavy rain events,  
-  independent of named storms.  
-\- Hurricane Maria caused severe flooding across San Juan, including at the  
-  Luis Muñoz Marín International Airport.  
-\- San Juan has more hospital capacity, emergency infrastructure, and  
-  government resources than most other municipios — which should offset  
-  pure risk scores in the readiness component.  
-\- SVI scores for San Juan are mixed: higher income and access than rural  
-  municipios, but high population density increases aggregate exposure.
+## San Juan
 
-\*\*Assessment:\*\* Dashboard output showing elevated risk with a partial readiness  
-offset is consistent with San Juan's profile — high exposure, localized  
-chronic flooding, but stronger institutional capacity than rural areas.
+**Why this municipio matters:**  
+San Juan is the capital, the most populous municipio, and a useful check on whether the model can reflect both **high exposure** and **higher relative capacity** at the same time.
 
-\---
+**What public sources suggest:**
+- San Juan has well-documented urban flooding in low-lying neighborhoods during heavy rainfall, even outside named storms.
+- Hurricane Maria produced severe flooding impacts in and around the metro area.
+- San Juan also has comparatively stronger hospital, government, and emergency infrastructure than many rural municipios.
+- High population density and built-up exposure support elevated concern even when readiness is stronger than elsewhere.
 
-\#\# Overall Conclusion
+**Assessment:**  
+An output showing elevated concern with some readiness offset is directionally consistent with San Juan's profile: high exposure, recurring urban flood issues, and stronger institutional capacity than many other municipios.
 
-Across all three pilot municipios, the dashboard risk outputs are  
-directionally believable based on open-source public evidence:
+---
 
-\- \*\*Salinas\*\* — high risk is well-supported by south coast flood geography  
-  and social vulnerability data.  
-\- \*\*Mayagüez\*\* — moderate-to-high risk is consistent with river corridor  
-  flooding and dual hazard exposure.  
-\- \*\*San Juan\*\* — elevated risk with readiness offset reflects the documented  
-  pattern of localized urban flooding in a resource-rich but  
-  exposure-heavy municipio.
+## Overall Conclusion
 
-No output appears to contradict established flood risk knowledge for Puerto  
-Rico. Future validation should include backtesting against specific historical  
-events such as Hurricane Maria (2017) and the 2020 earthquake sequence as  
-outlined in Index Spec v1.
+Across these three review points, the outputs appear **directionally believable** based on public evidence:
 
-\---
+- **Salinas:** high concern is consistent with south-coast flood geography and vulnerability context.
+- **Mayagüez:** moderate-to-high concern is consistent with river corridor flooding and broader hazard exposure.
+- **San Juan:** elevated concern with stronger readiness context fits a dense urban municipio with recurring flood issues and greater institutional capacity.
 
-\#\# References
+This note should be treated as a **qualitative plausibility check**, not as final empirical validation. A stronger future validation path would include event-based backtesting against specific historical cases such as Hurricane Maria and other documented flood episodes.
 
-\- FEMA Flood Map Service Center: msc.fema.gov  
-\- NOAA CO-OPS API: api.tidesandcurrents.noaa.gov  
-\- CDC/ATSDR Social Vulnerability Index: atsdr.cdc.gov/place-health/php/svi  
-\- NWS Puerto Rico Weather Forecast Office: weather.gov/sju  
-\- USGS National Water Information System: waterdata.usgs.gov  
-\- Hurricane Maria after-action reporting (FEMA, 2018\)  
+---
+
+## Reference Pointers
+
+- FEMA Flood Map Service Center: `msc.fema.gov`
+- NOAA CO-OPS: `api.tidesandcurrents.noaa.gov`
+- NWS San Juan Weather Forecast Office: `weather.gov/sju`
+- USGS National Water Information System: `waterdata.usgs.gov`
+- CDC/ATSDR Social Vulnerability Index: `atsdr.cdc.gov/place-health/php/svi`
